@@ -9,7 +9,7 @@
 title: Logan's Notes
 email: logan@protiumit.com
 description: > # this means to ignore newlines until "baseurl:"
-  Various notes about Openstack, Ceph, and Internet.
+  Notes about Openstack, Ceph, and Internet.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://logan2211.github.io" # the base hostname & protocol for your site
 #twitter_username: jekyllrb
@@ -17,3 +17,6 @@ github_username:  logan2211
 
 # Build settings
 markdown: kramdown
+
+gems:
+  - jekyll-gist

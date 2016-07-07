@@ -1,15 +1,15 @@
 ---
 layout: page
 title: About
+title_long: About Me
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
+I am an entrepreneur, cloud and network operator, and developer based in
+Dallas, TX.
 
-You can find the source code for the Jekyll new theme at:
-{% include icon-github.html username="jglovier" %} /
-[jekyll-new](https://github.com/jglovier/jekyll-new)
+My current focus is on [Openstack](https://openstack.org) and [Ceph](https://ceph.com) based HA clouds, particularly scalable public cloud architecture and stateless/diskless hypervisors. I deploy with [OpenStack-Ansible](https://github.com/openstack/openstack-ansible) and [contribute](https://review.openstack.org/#/q/owner:logan2211%2540gmail.com) regularly to that project. I also author or contribute to a variety of other Ansible roles and projects.
 
-You can find the source code for Jekyll at
-{% include icon-github.html username="jekyll" %} /
-[jekyll](https://github.com/jekyll/jekyll)
+A 10-year veteran of the hosting industry, I co-founded [Limestone Networks](https://www.lstn.net) and consult with hosting providers on cloud strategies. I also continue to maintain [AS46475](http://bgp.he.net/AS46475)'s Internet backbone.
+
+Feel free to contact me by [email](mailto:logan@protiumit.com) or on [Freenode](irc://chat.freenode.net) (logan-) if I can be of any assistance!
