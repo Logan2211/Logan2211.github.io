@@ -18,5 +18,7 @@ github_username:  logan2211
 # Build settings
 markdown: kramdown
 
+permalink: ":year/:month/:day/:slug.html"
+
 gems:
   - jekyll-gist
