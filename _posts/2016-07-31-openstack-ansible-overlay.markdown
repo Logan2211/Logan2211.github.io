@@ -50,7 +50,7 @@ git submodule update --remote
 # Run the deployment to build the AIO
 # UPDATE_ANSIBLE is used to run the bootstrap-ansible.sh script included with OpenStack-Ansible
 # DEPLOY_AIO triggers the AIO bootstrap role
-sudo UPDATE_ANSIBLE=yes DEPLOY_AIO=yes scripts/deploy.sh
+sudo UPDATE_ANSIBLE=true DEPLOY_AIO=true scripts/deploy.sh
 {% endhighlight %}
 
 ## Customization
