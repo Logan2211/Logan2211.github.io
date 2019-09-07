@@ -2,6 +2,7 @@
 layout: post
 title:  "Automatic Linux source based routing"
 date:   2016-07-06 18:00:49 -0500
+last_modified_at: 2019-09-07 17:00:00 -0500
 categories: ubuntu debian network routing
 ---
 
@@ -84,9 +85,17 @@ Then drop the following script in `/opt/if-post-up-source-route`:
 #the $IFACE routing table is used to place the default route in for the source routing table
 #ip route list table $IFACE will list the routing table for this interface
 
+cidr_to_netmask() {
+	# Number of args to shift, 255..255, first non-255 byte, zeroes
+	set -- $(( 5 - ($1 / 8) )) 255 255 255 255 $(( (255 << (8 - ($1 % 8))) & 255 )) 0 0 0
+	[ $1 -gt 1 ] && shift $1 || shift
+	NETMASK=${1-0}.${2-0}.${3-0}.${4-0}
+}
+
 set_netinfo() {
-	IPADDR=$(ifconfig "$IFACE" | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
-	NETMASK=$(ifconfig "$IFACE" | grep 'inet addr:' | cut -d: -f4 | awk '{ print $1}')
+	local IPCIDR=$(ip addr show $IFACE | grep "inet\b" | awk '{print $2}' | head -n1)
+	IPADDR=$(echo "$IPCIDR" | cut -d/ -f1)
+	cidr_to_netmask $(echo "$IPCIDR" | cut -d/ -f2)
 
 	OLDIFS=$IFS
 	IFS=.
