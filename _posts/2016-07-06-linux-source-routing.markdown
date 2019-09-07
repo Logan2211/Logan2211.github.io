@@ -2,7 +2,7 @@
 layout: post
 title:  "Automatic Linux source based routing"
 date:   2016-07-06 18:00:49 -0500
-last_modified_at: 2019-09-07 17:00:00 -0500
+last_modified_at: 2019-09-07 17:24:00 -0500
 categories: ubuntu debian network routing
 ---
 
@@ -86,33 +86,33 @@ Then drop the following script in `/opt/if-post-up-source-route`:
 #ip route list table $IFACE will list the routing table for this interface
 
 cidr_to_netmask() {
-	# Number of args to shift, 255..255, first non-255 byte, zeroes
-	set -- $(( 5 - ($1 / 8) )) 255 255 255 255 $(( (255 << (8 - ($1 % 8))) & 255 )) 0 0 0
-	[ $1 -gt 1 ] && shift $1 || shift
-	NETMASK=${1-0}.${2-0}.${3-0}.${4-0}
+    # Number of args to shift, 255..255, first non-255 byte, zeroes
+    set -- $(( 5 - ($1 / 8) )) 255 255 255 255 $(( (255 << (8 - ($1 % 8))) & 255 )) 0 0 0
+    [ $1 -gt 1 ] && shift $1 || shift
+    NETMASK=${1-0}.${2-0}.${3-0}.${4-0}
 }
 
 set_netinfo() {
-	local IPCIDR=$(ip addr show $IFACE | grep "inet\b" | awk '{print $2}' | head -n1)
-	IPADDR=$(echo "$IPCIDR" | cut -d/ -f1)
-	cidr_to_netmask $(echo "$IPCIDR" | cut -d/ -f2)
+    local IPCIDR=$(ip addr show $IFACE | grep "inet\b" | awk '{print $2}' | head -n1)
+    IPADDR=$(echo "$IPCIDR" | cut -d/ -f1)
+    cidr_to_netmask $(echo "$IPCIDR" | cut -d/ -f2)
 
-	OLDIFS=$IFS
-	IFS=.
-	set -- $IPADDR
-	local IPADDR1=$1
-	local IPADDR2=$2
-	local IPADDR3=$3
-	local IPADDR4=$4
+    OLDIFS=$IFS
+    IFS=.
+    set -- $IPADDR
+    local IPADDR1=$1
+    local IPADDR2=$2
+    local IPADDR3=$3
+    local IPADDR4=$4
 
-	set -- $NETMASK
-	local NETMASK1=$1
-	local NETMASK2=$2
-	local NETMASK3=$3
-	local NETMASK4=$4
-	IFS=$OLDIFS
-	NETWORK=$(printf "%d.%d.%d.%d\n" "$((IPADDR1 & NETMASK1))" "$((IPADDR2 & NETMASK2))" "$((IPADDR3 & NETMASK3))" "$((IPADDR4 & NETMASK4))")
-	GATEWAY=$(printf "%d.%d.%d.%d\n" "$((IPADDR1 & NETMASK1))" "$((IPADDR2 & NETMASK2))" "$((IPADDR3 & NETMASK3))" "$(((IPADDR4 & NETMASK4)+1))")
+    set -- $NETMASK
+    local NETMASK1=$1
+    local NETMASK2=$2
+    local NETMASK3=$3
+    local NETMASK4=$4
+    IFS=$OLDIFS
+    NETWORK=$(printf "%d.%d.%d.%d\n" "$((IPADDR1 & NETMASK1))" "$((IPADDR2 & NETMASK2))" "$((IPADDR3 & NETMASK3))" "$((IPADDR4 & NETMASK4))")
+    GATEWAY=$(printf "%d.%d.%d.%d\n" "$((IPADDR1 & NETMASK1))" "$((IPADDR2 & NETMASK2))" "$((IPADDR3 & NETMASK3))" "$(((IPADDR4 & NETMASK4)+1))")
 }
 
 set_netinfo
